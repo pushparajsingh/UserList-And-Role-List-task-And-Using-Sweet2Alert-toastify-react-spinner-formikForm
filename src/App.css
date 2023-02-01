@@ -1,5 +1,5 @@
-.App {
-  text-align: center;
+* {
+  margin: 0px;
 }
 
 .App-logo {
@@ -13,17 +13,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +24,84 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#firstName,
+#lastName,
+#emailName {
+  display: block;
+}
+
+.RegisterForm {
+  /* From https://css.glass */
+  background: rgba(100, 121, 236, 0.28);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(11px);
+  -webkit-backdrop-filter: blur(11px);
+  border: 1px solid rgba(55, 11, 238, 0.03);
+  width: 38%;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  border-radius: 25px;
+  box-shadow: 2px 2px 25px 4px black;
+}
+.headingTop {
+  margin-bottom: 2rem;
+}
+.spaceBottom {
+  margin-bottom: 10px;
+}
+
+.margin-Top {
+  margin-top: -20px;
+  z-index: -20;
+}
+
+.activeColor {
+  text-decoration: none;
+  color: white;
+  font-size: 1.3rem;
+}
+.activeColor:hover {
+  color: black;
+}
+.colorText {
+  color: #007aff;
+  font-weight: bold;
+  background-color: rgb(253, 249, 249);
+  padding: 8px;
+  border-radius: 25px;
+}
+.btncenter {
+  margin-left: 10%;
+}
+.btn-User-Listing {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+#centerRoleLabelBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.Btn-Role-listing {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+.box-label {
+  width: 500px;
+  margin-bottom: 1rem;
+}
+.Table-Font-Size-UserList {
+  font-weight: bolder;
+  font-size: 17px;
+  color: #131413;
 }
