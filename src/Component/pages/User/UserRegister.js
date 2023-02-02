@@ -5,10 +5,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserData, registerUserData } from "../../redux/Slice/UserSlice";
+import {
+  updateUserData,
+  registerUserData,
+} from "../../../redux/Slice/UserSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { phoneRegExp } from "../ReguxValidation";
+import { phoneRegExp } from "../../ReguxValidation";
 
 const validationSchema = yup.object({
   name: yup.string("Enter your name").required("Name is required"),
@@ -32,13 +35,22 @@ const validationSchema = yup.object({
   role: yup.string("Enter your Role").required("Role is required"),
 });
 
+const toastifyObject = {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+};
 const UserRegister = () => {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const updateData = useSelector((state) => state?.users?.userUpdate);
   const getData = useSelector((state) => state?.users?.userData);
   const getRoleLabeldata = useSelector((state) => state?.roles?.roleData);
-  console.log(333, getRoleLabeldata);
   const uuid = () => {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
       /[xy]/g,
@@ -75,16 +87,7 @@ const UserRegister = () => {
       } else {
         dispatch(registerUserData({ ...values, key: uuid() }));
       }
-      toast.success("Form submited successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.success("Form submited successfully", toastifyObject);
       navigator("/");
     },
   });

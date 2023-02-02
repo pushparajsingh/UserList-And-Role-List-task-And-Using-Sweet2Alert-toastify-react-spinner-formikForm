@@ -9,12 +9,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from "@mui/icons-material/Create";
+import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteRoleData,
   editRoleData,
   removeRoleData,
-} from "../../redux/Slice/RoleSlice";
+} from "../../../redux/Slice/RoleSlice";
 import { HashLoader } from "react-spinners";
 
 const RoleListing = () => {
@@ -59,6 +62,7 @@ const RoleListing = () => {
               navigate("/role-form");
               dispatch(removeRoleData());
             }}
+            startIcon={<AddIcon />}
           >
             Add Role
           </Button>
@@ -95,11 +99,16 @@ const RoleListing = () => {
                       onClick={() => {
                         confirmDelete(row.roleKey);
                       }}
+                      startIcon={<DeleteIcon />}
                     >
                       Delete
                     </Button>
                     &nbsp;
-                    <Button variant="contained" onClick={() => editData(row)}>
+                    <Button
+                      variant="contained"
+                      onClick={() => editData(row)}
+                      startIcon={<CreateIcon />}
+                    >
                       Edit
                     </Button>
                   </TableCell>

@@ -1,10 +1,10 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-import ResponsiveAppBar from "./Component/Header";
-import UserListing from "./Component/User/UserListings";
-import UserRegister from "./Component/User/UserRegister";
-import RoleListing from "./Component/Role/RoleListing";
-import RoleRegister from "./Component/Role/RoleRegister";
+import ResponsiveAppBar from "./Component/Header/Header";
+import UserListing from "./Component/pages/User/UserListings";
+import UserRegister from "./Component/pages/User/UserRegister";
+import RoleListing from "./Component/pages/Role/RoleListing";
+import RoleRegister from "./Component/pages/Role/RoleRegister";
 import { ToastContainer } from "react-toastify";
 
 function App() {

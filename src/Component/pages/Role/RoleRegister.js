@@ -9,9 +9,9 @@ import { toast } from "react-toastify";
 import {
   registerRoleData,
   updateRoleSingleData,
-} from "../../redux/Slice/RoleSlice";
+} from "../../../redux/Slice/RoleSlice";
 import { useNavigate } from "react-router-dom";
-import { numberKeyRegExp } from "../ReguxValidation";
+import { numberKeyRegExp } from "../../ReguxValidation";
 
 const validationSchema = yup.object({
   roleLabel: yup
@@ -23,7 +23,16 @@ const validationSchema = yup.object({
     .matches(numberKeyRegExp, "Role Key is not valid,Write in number format")
     .required("Role Key is required"),
 });
-
+const toastifyObject = {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "dark",
+};
 const RoleRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,41 +48,31 @@ const RoleRegister = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (updateRoleData) {
-        const updatedData = roleData?.map((item) => {
-          if (updateRoleData.roleKey == item.roleKey) {
-            return values;
-          } else {
-            return item;
-          }
-        });
-        dispatch(updateRoleSingleData(updatedData));
-        toast.success("Role submited successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        navigate("/role-listing");
+        const uniqueKey = roleData.filter(
+          (item) => item.roleKey == values.roleKey
+        );
+        console.log("unique", uniqueKey);
+        if (updateRoleData.roleKey == values.roleKey || uniqueKey.length == 0) {
+          const updatedData = roleData?.map((item) => {
+            if (updateRoleData.roleKey == item.roleKey) {
+              return values;
+            } else {
+              return item;
+            }
+          });
+          dispatch(updateRoleSingleData(updatedData));
+          toast.success("Role submited successfully", toastifyObject);
+          navigate("/role-listing");
+        } else {
+          alert("This key has already exist, please try another key");
+        }
       } else {
         const data = roleData.filter((item) => item.roleKey == values.roleKey);
         if (data != 0) {
           alert("This key has already exist, please try another key");
         } else {
           dispatch(registerRoleData(values));
-          toast.success("Form submited successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+          toast.success("Form submited successfully", toastifyObject);
           navigate("/role-listing");
         }
       }

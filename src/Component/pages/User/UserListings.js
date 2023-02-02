@@ -8,11 +8,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from "@mui/icons-material/Create";
+import AddIcon from "@mui/icons-material/Add";
+
 import {
   deleteUserData,
   editUserData,
   removeUserData,
-} from "../../redux/Slice/UserSlice";
+} from "../../../redux/Slice/UserSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { HashLoader } from "react-spinners";
@@ -59,6 +63,7 @@ const UserListings = () => {
             navigate("/user-form");
             dispatch(removeUserData());
           }}
+          startIcon={<AddIcon />}
         >
           ADD User
         </Button>
@@ -112,6 +117,7 @@ const UserListings = () => {
                     variant="contained"
                     color="error"
                     onClick={() => DeleteData(row.key)}
+                    startIcon={<DeleteIcon />}
                   >
                     Delete
                   </Button>
@@ -121,6 +127,7 @@ const UserListings = () => {
                     onClick={() => {
                       editData(row);
                     }}
+                    startIcon={<CreateIcon />}
                   >
                     Edit
                   </Button>
