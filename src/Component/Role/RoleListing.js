@@ -11,15 +11,15 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteRoleSingleData,
-  editRoleSingleData,
+  deleteRoleData,
+  editRoleData,
   removeRoleData,
-} from "../../redux/AllSlice";
+} from "../../redux/Slice/RoleSlice";
 import { HashLoader } from "react-spinners";
 
 const RoleListing = () => {
   const navigate = useNavigate();
-  const roleData = useSelector((state) => state?.Data?.roleData);
+  const roleData = useSelector((state) => state?.roles?.roleData);
   const dispatch = useDispatch();
   const [rows, setRows] = React.useState();
   React.useEffect(() => {
@@ -38,16 +38,16 @@ const RoleListing = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
         const data = roleData.filter((item) => item.roleKey != id);
-        dispatch(deleteRoleSingleData(data));
+        dispatch(deleteRoleData(data));
       }
     });
   };
 
   const editData = (row) => {
     navigate("/role-form");
-    dispatch(editRoleSingleData(row));
+    dispatch(editRoleData(row));
   };
   return (
     <>
@@ -55,7 +55,6 @@ const RoleListing = () => {
         <div className="Btn-Role-listing">
           <Button
             variant="contained"
-            color="warning"
             onClick={() => {
               navigate("/role-form");
               dispatch(removeRoleData());
@@ -92,20 +91,16 @@ const RoleListing = () => {
                   <TableCell align="center">
                     <Button
                       variant="contained"
-                      color="success"
-                      onClick={() => editData(row)}
-                    >
-                      Edit
-                    </Button>{" "}
-                    &nbsp;
-                    <Button
-                      variant="contained"
                       color="error"
                       onClick={() => {
                         confirmDelete(row.roleKey);
                       }}
                     >
                       Delete
+                    </Button>
+                    &nbsp;
+                    <Button variant="contained" onClick={() => editData(row)}>
+                      Edit
                     </Button>
                   </TableCell>
                 </TableRow>

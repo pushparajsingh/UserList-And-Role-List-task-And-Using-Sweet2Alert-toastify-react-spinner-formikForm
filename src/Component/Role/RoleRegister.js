@@ -6,10 +6,13 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { registerRoleData, updateRoleSingleData } from "../../redux/AllSlice";
+import {
+  registerRoleData,
+  updateRoleSingleData,
+} from "../../redux/Slice/RoleSlice";
 import { useNavigate } from "react-router-dom";
+import { numberKeyRegExp } from "../ReguxValidation";
 
-const phoneRegExp = /^(0|\+?[1-9]\d*)$/;
 const validationSchema = yup.object({
   roleLabel: yup
     .string("Enter your roleLabel:")
@@ -17,15 +20,15 @@ const validationSchema = yup.object({
   roleKey: yup
     .string("Enter your roleKey")
     .min(3, "Role key at least 3 digit")
-    .matches(phoneRegExp, "Role Key is not valid,Write in number format")
+    .matches(numberKeyRegExp, "Role Key is not valid,Write in number format")
     .required("Role Key is required"),
 });
 
 const RoleRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const roleData = useSelector((state) => state.Data.roleData);
-  const updateRoleData = useSelector((state) => state.Data.updateRoleData);
+  const roleData = useSelector((state) => state.roles.roleData);
+  const updateRoleData = useSelector((state) => state.roles.updateRoleData);
   const formik = useFormik({
     initialValues: updateRoleData
       ? updateRoleData
@@ -36,7 +39,6 @@ const RoleRegister = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       if (updateRoleData) {
-        navigate("/role-listing");
         const updatedData = roleData?.map((item) => {
           if (updateRoleData.roleKey == item.roleKey) {
             return values;
@@ -55,6 +57,7 @@ const RoleRegister = () => {
           progress: undefined,
           theme: "dark",
         });
+        navigate("/role-listing");
       } else {
         const data = roleData.filter((item) => item.roleKey == values.roleKey);
         if (data != 0) {
@@ -97,7 +100,7 @@ const RoleRegister = () => {
               helperText={formik.touched.roleLabel && formik.errors.roleLabel}
             />
           </div>
-         
+
           <div className="box-label">
             <TextField
               fullWidth

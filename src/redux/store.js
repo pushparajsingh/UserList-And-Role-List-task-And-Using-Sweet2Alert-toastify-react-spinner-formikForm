@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AllData from "./AllSlice";
+import UserSlice from "./Slice/UserSlice";
+import RoleSlice from "./Slice/RoleSlice";
 
 export const store = configureStore({
   reducer: {
-    Data: AllData,
+    users: UserSlice,
+    roles: RoleSlice,
   },
 });

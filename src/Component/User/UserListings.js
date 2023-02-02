@@ -9,17 +9,17 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import {
-  deleteUserSingleData,
-  editUserSingleData,
-  removeUserSingleData,
-} from "../../redux/AllSlice";
+  deleteUserData,
+  editUserData,
+  removeUserData,
+} from "../../redux/Slice/UserSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { HashLoader } from "react-spinners";
 
 const UserListings = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state?.Data?.value);
+  const data = useSelector((state) => state?.users?.userData);
   const [rows, setRows] = useState();
   const navigate = useNavigate();
 
@@ -40,25 +40,24 @@ const UserListings = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Deleted!", "Your record has been deleted.", "success");
         const newData = data.filter((item) => item.key != uniqueId);
-        dispatch(deleteUserSingleData(newData));
+        dispatch(deleteUserData(newData));
       }
     });
   };
   const editData = (row) => {
     navigate("/user-form");
-    dispatch(editUserSingleData(row));
+    dispatch(editUserData(row));
   };
   return (
     <div>
       <div className="btn-User-Listing">
         <Button
           variant="contained"
-          color="warning"
           onClick={() => {
             navigate("/user-form");
-            dispatch(removeUserSingleData());
+            dispatch(removeUserData());
           }}
         >
           ADD User
