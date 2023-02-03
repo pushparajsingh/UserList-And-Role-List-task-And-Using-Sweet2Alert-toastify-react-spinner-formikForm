@@ -5,13 +5,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  updateUserData,
-  registerUserData,
-} from "../../../redux/Slice/UserSlice";
+import { updateUserData, registerUserData } from "../../Redux/Slice/UserSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { phoneRegExp } from "../../ReguxValidation";
+import { phoneRegExp } from "../../Components/ReguxValidation";
 
 const validationSchema = yup.object({
   name: yup.string("Enter your name").required("Name is required"),
@@ -25,7 +22,7 @@ const validationSchema = yup.object({
     .required("Password is required"),
   username: yup
     .string()
-    .min(1, "Mininum 1 characters")
+    .min(1, "Minimum 1 characters")
     .max(15, "Maximum 15 characters")
     .required("You must enter a username"),
   mobile: yup
@@ -87,7 +84,7 @@ const UserRegister = () => {
       } else {
         dispatch(registerUserData({ ...values, key: uuid() }));
       }
-      toast.success("Form submited successfully", toastifyObject);
+      toast.success("Form submitted successfully", toastifyObject);
       navigator("/");
     },
   });

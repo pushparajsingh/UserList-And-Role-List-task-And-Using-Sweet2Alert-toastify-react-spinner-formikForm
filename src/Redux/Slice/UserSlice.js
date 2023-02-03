@@ -34,13 +34,13 @@ export const userSlice = createSlice({
     deleteUserData: (state, action) => {
       state.userData = action.payload;
     },
-    editUserData: (state, action) => {
+    getUserData: (state, action) => {
       state.userUpdate = action.payload;
     },
     updateUserData: (state, action) => {
       state.userData = action.payload;
     },
-    removeUserData: (state, action) => {
+    resetUserData: (state, action) => {
       state.userUpdate = "";
     },
   },
@@ -50,9 +50,9 @@ export const userSlice = createSlice({
 export const {
   registerUserData,
   deleteUserData,
-  editUserData,
+  getUserData,
   updateUserData,
-  removeUserData,
+  resetUserData,
 } = userSlice.actions;
 
 export default userSlice.reducer;

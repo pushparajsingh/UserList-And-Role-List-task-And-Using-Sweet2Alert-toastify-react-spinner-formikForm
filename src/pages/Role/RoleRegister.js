@@ -6,12 +6,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import {
-  registerRoleData,
-  updateRoleSingleData,
-} from "../../../redux/Slice/RoleSlice";
+import { registerRoleData, updateRoleData } from "../../Redux/Slice/RoleSlice";
 import { useNavigate } from "react-router-dom";
-import { numberKeyRegExp } from "../../ReguxValidation";
+import { numberKeyRegExp } from "../../Components/ReguxValidation";
 
 const validationSchema = yup.object({
   roleLabel: yup
@@ -37,30 +34,30 @@ const RoleRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const roleData = useSelector((state) => state.roles.roleData);
-  const updateRoleData = useSelector((state) => state.roles.updateRoleData);
+  const updateData = useSelector((state) => state.roles.updateRoleData);
   const formik = useFormik({
-    initialValues: updateRoleData
-      ? updateRoleData
+    initialValues: updateData
+      ? updateData
       : {
           roleLabel: "",
           roleKey: "",
         },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      if (updateRoleData) {
+      if (updateData) {
         const uniqueKey = roleData.filter(
           (item) => item.roleKey == values.roleKey
         );
         console.log("unique", uniqueKey);
-        if (updateRoleData.roleKey == values.roleKey || uniqueKey.length == 0) {
+        if (updateData.roleKey == values.roleKey || uniqueKey.length == 0) {
           const updatedData = roleData?.map((item) => {
-            if (updateRoleData.roleKey == item.roleKey) {
+            if (updateData.roleKey == item.roleKey) {
               return values;
             } else {
               return item;
             }
           });
-          dispatch(updateRoleSingleData(updatedData));
+          dispatch(updateRoleData(updatedData));
           toast.success("Role submited successfully", toastifyObject);
           navigate("/role-listing");
         } else {
@@ -81,8 +78,9 @@ const RoleRegister = () => {
 
   return (
     <>
+      
       <h1 style={{ textAlign: "center", marginTop: "3rem" }}>
-        {updateRoleData ? "Role Labeling Update" : "Role Labeling"}
+        {updateData ? "Role Labeling Update" : "Role Labeling"}
       </h1>
       <div id="centerRoleLabelBox">
         <form onSubmit={formik.handleSubmit}>

@@ -11,13 +11,14 @@ import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
+import TableNoRecordFound from "../../Components/Table/TableNoRecordFound";
 
 import {
   deleteUserData,
-  editUserData,
-  removeUserData,
-} from "../../../redux/Slice/UserSlice";
-import { useNavigate, useParams } from "react-router-dom";
+  getUserData,
+  resetUserData,
+} from "../../Redux/Slice/UserSlice";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { HashLoader } from "react-spinners";
 
@@ -52,7 +53,7 @@ const UserListings = () => {
   };
   const editData = (row) => {
     navigate("/user-form");
-    dispatch(editUserData(row));
+    dispatch(getUserData(row));
   };
   return (
     <div>
@@ -61,7 +62,7 @@ const UserListings = () => {
           variant="contained"
           onClick={() => {
             navigate("/user-form");
-            dispatch(removeUserData());
+            dispatch(resetUserData());
           }}
           startIcon={<AddIcon />}
         >
@@ -134,22 +135,13 @@ const UserListings = () => {
                 </TableCell>
               </TableRow>
             ))}
-            <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell colSpan={7}>
-                {data.length === 0 ? (
-                  <h1 align={"center"}>No Record Found</h1>
-                ) : (
-                  ""
-                )}
-              </TableCell>
-            </TableRow>
+            <TableNoRecordFound
+              colSpan={7}
+              loading={!rows}
+              roleData={data.length == 0}
+            />
           </TableBody>
         </Table>
-        {!rows && data.length >= 1 && (
-          <HashLoader color="#007aff" style={{ textAlign: "center" }} />
-        )}
       </TableContainer>
     </div>
   );

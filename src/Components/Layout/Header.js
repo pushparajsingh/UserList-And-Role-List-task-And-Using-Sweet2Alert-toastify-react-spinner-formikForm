@@ -9,13 +9,14 @@ import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar() {
+function Header() {
+  const { pathname } = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [toggle, setToggle] = useState(true);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -24,7 +25,7 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  console.log(pathname, 999);
   return (
     <AppBar position="static" className="marginHeader">
       <Container maxWidth="xl">
@@ -54,10 +55,11 @@ function ResponsiveAppBar() {
           </Typography>
           <Link
             to={"/"}
-            className={toggle ? "activeColor colorText" : "activeColor"}
-            onClick={() => {
-              setToggle(true);
-            }}
+            className={
+              pathname == "/" || pathname == "/user-form"
+                ? "activeColor colorText"
+                : "activeColor"
+            }
           >
             User List
           </Link>
@@ -65,10 +67,11 @@ function ResponsiveAppBar() {
           <Link
             to={"/role-listing"}
             style={{ marginLeft: "30px" }}
-            className={!toggle ? "activeColor colorText" : "activeColor"}
-            onClick={() => {
-              setToggle(false);
-            }}
+            className={
+              pathname == "/role-listing" || pathname == "/role-form"
+                ? "activeColor colorText"
+                : "activeColor"
+            }
           >
             Role Listing
           </Link>
@@ -111,4 +114,4 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+export default Header;

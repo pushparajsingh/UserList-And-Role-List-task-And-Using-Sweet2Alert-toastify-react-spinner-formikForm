@@ -19,13 +19,13 @@ export const roleSlice = createSlice({
     deleteRoleData: (state, action) => {
       state.roleData = action.payload;
     },
-    editRoleData: (state, action) => {
+    getRoleData: (state, action) => {
       state.updateRoleData = action.payload;
     },
-    updateRoleSingleData: (state, action) => {
+    updateRoleData: (state, action) => {
       state.roleData = action.payload;
     },
-    removeRoleData: (state, action) => {
+    resetRoleData: (state, action) => {
       state.updateRoleData = "";
     },
   },
@@ -35,9 +35,9 @@ export const roleSlice = createSlice({
 export const {
   registerRoleData,
   deleteRoleData,
-  editRoleData,
-  updateRoleSingleData,
-  removeRoleData,
+  getRoleData,
+  updateRoleData,
+  resetRoleData,
 } = roleSlice.actions;
 
 export default roleSlice.reducer;

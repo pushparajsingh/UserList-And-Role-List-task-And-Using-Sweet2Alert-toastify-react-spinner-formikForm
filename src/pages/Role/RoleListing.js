@@ -15,11 +15,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteRoleData,
-  editRoleData,
-  removeRoleData,
-} from "../../../redux/Slice/RoleSlice";
+  getRoleData,
+  resetRoleData,
+} from "../../Redux/Slice/RoleSlice";
 import { HashLoader } from "react-spinners";
-
+import TableNoRecordFound from "../../Components/Table/TableNoRecordFound";
 const RoleListing = () => {
   const navigate = useNavigate();
   const roleData = useSelector((state) => state?.roles?.roleData);
@@ -50,7 +50,7 @@ const RoleListing = () => {
 
   const editData = (row) => {
     navigate("/role-form");
-    dispatch(editRoleData(row));
+    dispatch(getRoleData(row));
   };
   return (
     <>
@@ -60,7 +60,7 @@ const RoleListing = () => {
             variant="contained"
             onClick={() => {
               navigate("/role-form");
-              dispatch(removeRoleData());
+              dispatch(resetRoleData());
             }}
             startIcon={<AddIcon />}
           >
@@ -114,23 +114,17 @@ const RoleListing = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell colSpan={7}>
-                  {roleData.length === 0 ? (
-                    <h1 align={"center"}>No Record Found</h1>
-                  ) : (
-                    ""
-                  )}
-                </TableCell>
-              </TableRow>
+              <TableNoRecordFound
+                colSpan={7}
+                loading={!rows}
+                roleData={roleData.length == 0}
+              />
             </TableBody>
           </Table>
         </TableContainer>
-        {!rows && roleData.length >= 1 && (
+        {/* {!rows && roleData.length >= 1 && (
           <HashLoader color="#007aff" style={{ textAlign: "center" }} />
-        )}
+        )} */}
       </div>
     </>
   );
