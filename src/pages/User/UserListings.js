@@ -27,7 +27,7 @@ const UserListings = () => {
   const data = useSelector((state) => state?.users?.userData);
   const [rows, setRows] = useState();
   const navigate = useNavigate();
-  const [isloading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setRows(data);
@@ -106,7 +106,7 @@ const UserListings = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {!isloading &&
+            {!isLoading &&
               rows?.map((row, index) => (
                 <TableRow
                   key={index}
@@ -141,11 +141,9 @@ const UserListings = () => {
                   </TableCell>
                 </TableRow>
               ))}
-            <TableNoRecordFound
-              colSpan={7}
-              loading={isloading}
-              roleData={data.length == 0}
-            />
+            {(!data.length || isLoading) && (
+              <TableNoRecordFound colSpan={7} loading={isLoading} />
+            )}
           </TableBody>
         </Table>
       </TableContainer>

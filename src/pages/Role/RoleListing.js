@@ -120,17 +120,12 @@ const RoleListing = () => {
                     </TableCell>
                   </TableRow>
                 ))}
-              <TableNoRecordFound
-                colSpan={7}
-                loading={isLoading}
-                roleData={roleData.length == 0}
-              />
+              {(!roleData.length || isLoading) && (
+                <TableNoRecordFound colSpan={7} loading={isLoading} />
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        {/* {!rows && roleData.length >= 1 && (
-          <HashLoader color="#007aff" style={{ textAlign: "center" }} />
-        )} */}
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { TableRow, TableCell, CircularProgress } from "@mui/material";
 import { HashLoader } from "react-spinners";
 
-const TableNoRecordFound = ({ loading, colSpan, roleData }) => {
+const TableNoRecordFound = ({ loading, colSpan }) => {
   return (
     <TableRow>
       <TableCell colSpan={colSpan} align="center">
@@ -12,10 +12,8 @@ const TableNoRecordFound = ({ loading, colSpan, roleData }) => {
             style={{ textAlign: "center" }}
             size={42}
           />
-        ) : roleData ? (
-          <h2>No Record Found</h2>
         ) : (
-          ""
+          <h2>No Record Found</h2>
         )}
       </TableCell>
     </TableRow>
