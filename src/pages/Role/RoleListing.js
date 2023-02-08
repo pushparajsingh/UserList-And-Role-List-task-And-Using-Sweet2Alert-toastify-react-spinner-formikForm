@@ -18,18 +18,23 @@ import {
   getRoleData,
   resetRoleData,
 } from "../../Redux/Slice/RoleSlice";
-import { HashLoader } from "react-spinners";
+
 import TableNoRecordFound from "../../Components/Table/TableNoRecordFound";
 const RoleListing = () => {
   const navigate = useNavigate();
   const roleData = useSelector((state) => state?.roles?.roleData);
   const dispatch = useDispatch();
   const [rows, setRows] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(true);
+  React.useEffect(() => {
+    setRows(roleData);
+  }, [roleData]);
+
   React.useEffect(() => {
     setTimeout(() => {
-      setRows(roleData);
-    }, 800);
-  }, [roleData]);
+      setIsLoading(false);
+    }, 1500);
+  }, []);
   const confirmDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -85,38 +90,39 @@ const RoleListing = () => {
             </TableHead>
 
             <TableBody>
-              {rows?.map((row) => (
-                <TableRow
-                  key={row.roleKey}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="center">{row.roleLabel}</TableCell>
-                  <TableCell align="center">{row.roleKey}</TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={() => {
-                        confirmDelete(row.roleKey);
-                      }}
-                      startIcon={<DeleteIcon />}
-                    >
-                      Delete
-                    </Button>
-                    &nbsp;
-                    <Button
-                      variant="contained"
-                      onClick={() => editData(row)}
-                      startIcon={<CreateIcon />}
-                    >
-                      Edit
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {!isLoading &&
+                rows?.map((row) => (
+                  <TableRow
+                    key={row.roleKey}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="center">{row.roleLabel}</TableCell>
+                    <TableCell align="center">{row.roleKey}</TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => {
+                          confirmDelete(row.roleKey);
+                        }}
+                        startIcon={<DeleteIcon />}
+                      >
+                        Delete
+                      </Button>
+                      &nbsp;
+                      <Button
+                        variant="contained"
+                        onClick={() => editData(row)}
+                        startIcon={<CreateIcon />}
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
               <TableNoRecordFound
                 colSpan={7}
-                loading={!rows}
+                loading={isLoading}
                 roleData={roleData.length == 0}
               />
             </TableBody>

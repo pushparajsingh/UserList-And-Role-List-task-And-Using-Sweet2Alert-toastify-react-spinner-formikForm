@@ -27,12 +27,17 @@ const UserListings = () => {
   const data = useSelector((state) => state?.users?.userData);
   const [rows, setRows] = useState();
   const navigate = useNavigate();
+  const [isloading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setRows(data);
+  }, [data]);
 
   useEffect(() => {
     setTimeout(() => {
-      setRows(data);
+      setIsLoading(false);
     }, 1500);
-  }, [data]);
+  }, []);
 
   const DeleteData = (uniqueId) => {
     Swal.fire({
@@ -101,43 +106,44 @@ const UserListings = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row" align="center">
-                  {row.name}
-                </TableCell>
-                <TableCell align="center">{row.email} </TableCell>
-                <TableCell align="center">{row.username}</TableCell>
-                <TableCell align="center">{row.mobile}</TableCell>
-                <TableCell align="center">{row.role}</TableCell>
-                <TableCell align="center">
-                  <Button
-                    variant="contained"
-                    color="error"
-                    onClick={() => DeleteData(row.key)}
-                    startIcon={<DeleteIcon />}
-                  >
-                    Delete
-                  </Button>
-                  &nbsp;
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      editData(row);
-                    }}
-                    startIcon={<CreateIcon />}
-                  >
-                    Edit
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {!isloading &&
+              rows?.map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" align="center">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="center">{row.email} </TableCell>
+                  <TableCell align="center">{row.username}</TableCell>
+                  <TableCell align="center">{row.mobile}</TableCell>
+                  <TableCell align="center">{row.role}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => DeleteData(row.key)}
+                      startIcon={<DeleteIcon />}
+                    >
+                      Delete
+                    </Button>
+                    &nbsp;
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        editData(row);
+                      }}
+                      startIcon={<CreateIcon />}
+                    >
+                      Edit
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             <TableNoRecordFound
               colSpan={7}
-              loading={!rows}
+              loading={isloading}
               roleData={data.length == 0}
             />
           </TableBody>

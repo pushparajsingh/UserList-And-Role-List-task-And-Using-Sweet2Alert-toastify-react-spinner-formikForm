@@ -33,8 +33,8 @@ const toastifyObject = {
 const RoleRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const roleData = useSelector((state) => state.roles.roleData);
-  const updateData = useSelector((state) => state.roles.updateRoleData);
+  const roleData = useSelector((state) => state?.roles?.roleData);
+  const updateData = useSelector((state) => state?.roles?.updateRoleData);
   const formik = useFormik({
     initialValues: updateData
       ? updateData
@@ -78,7 +78,6 @@ const RoleRegister = () => {
 
   return (
     <>
-      
       <h1 style={{ textAlign: "center", marginTop: "3rem" }}>
         {updateData ? "Role Labeling Update" : "Role Labeling"}
       </h1>
